@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIBarButtonItem *forwardBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *refreshBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *stopBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *readabilityBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *actionBarButtonItem;
 
 @property (nonatomic, strong) UIWebView *webView;
@@ -25,6 +26,8 @@
 
 
 @implementation SVWebViewController
+
+static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
 
 #pragma mark - Initialization
 
@@ -74,6 +77,7 @@
     _forwardBarButtonItem = nil;
     _refreshBarButtonItem = nil;
     _stopBarButtonItem = nil;
+    _readabilityBarButtonItem = nil;
     _actionBarButtonItem = nil;
 }
 
@@ -157,6 +161,17 @@
     return _stopBarButtonItem;
 }
 
+- (UIBarButtonItem *)readabilityBarButtonItem {
+    if (!_readabilityBarButtonItem) {
+        _readabilityBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"SVWebViewController.bundle/SVWebViewControllerReadability"]
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(readabilityTapped:)];
+        _readabilityBarButtonItem.width = 44.0f; // TODO
+    }
+    return _readabilityBarButtonItem;
+}
+
 - (UIBarButtonItem *)actionBarButtonItem {
     if (!_actionBarButtonItem) {
         _actionBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
@@ -205,6 +220,8 @@
                           self.forwardBarButtonItem,
                           flexibleSpace,
                           refreshStopBarButtonItem,
+                          flexibleSpace,
+                          self.readabilityBarButtonItem,
                           flexibleSpace,
                           self.actionBarButtonItem,
                           fixedSpace,
@@ -276,6 +293,23 @@
 - (void)stopTapped:(UIBarButtonItem *)sender {
     [self.webView stopLoading];
     [self updateToolbarItems];
+}
+
+- (void)readabilityTapped:(UIBarButtonItem *)sender {
+    NSURL *url = self.webView.request.URL ? self.webView.request.URL : self.request.URL;
+    if (url != nil) {
+        if ([[url absoluteString] hasPrefix:ReadabilityURL]) {
+            self.readabilityBarButtonItem.tintColor = [UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil].tintColor;
+            
+            NSString *originalLink = [[url absoluteString] substringFromIndex:ReadabilityURL.length];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:originalLink]]];
+        } else {
+            self.readabilityBarButtonItem.tintColor = [UIColor colorWithRed:0.53 green:0 blue:0 alpha:1];
+            
+            NSString *readabilityLink = [NSString stringWithFormat:@"%@%@", ReadabilityURL, [url absoluteString]];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readabilityLink]]];
+        }
+    }
 }
 
 - (void)actionButtonTapped:(id)sender {

@@ -313,6 +313,11 @@ static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
 }
 
 - (void)actionButtonTapped:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(actionButtonTapped:)]) {
+        [_delegate performSelector:@selector(actionButtonTapped:) withObject:sender];
+        return;
+    }
+    
     NSURL *url = self.webView.request.URL ? self.webView.request.URL : self.request.URL;
     if (url != nil) {
         NSArray *activities = @[[SVWebViewControllerActivitySafari new], [SVWebViewControllerActivityChrome new]];

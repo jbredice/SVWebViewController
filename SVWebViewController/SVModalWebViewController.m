@@ -55,12 +55,18 @@
     
     self.webViewController.title = self.title;
     self.navigationBar.tintColor = self.barsTintColor;
+    self.navigationBar.translucent = NO;
 }
 
 #pragma mark - Delegate
 
 - (void)setWebViewDelegate:(id<UIWebViewDelegate>)webViewDelegate {
     self.webViewController.delegate = webViewDelegate;
+}
+
+- (void)setShowToolbar:(BOOL)showToolbar
+{
+    self.webViewController.showToolbar = showToolbar;
 }
 
 - (id<UIWebViewDelegate>)webViewDelegate {

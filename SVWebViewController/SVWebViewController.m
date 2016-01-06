@@ -50,6 +50,7 @@ static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
     self = [super init];
     if (self) {
         self.request = request;
+        self.showToolbar = YES;
     }
     return self;
 }
@@ -182,6 +183,8 @@ static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
 #pragma mark - Toolbar
 
 - (void)updateToolbarItems {
+    if (!_showToolbar) return;
+    
     self.backBarButtonItem.enabled = self.self.webView.canGoBack;
     self.forwardBarButtonItem.enabled = self.self.webView.canGoForward;
     

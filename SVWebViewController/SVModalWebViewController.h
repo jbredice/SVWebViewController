@@ -16,5 +16,6 @@
 
 @property (nonatomic, strong) UIColor *barsTintColor;
 @property (nonatomic, weak) id<UIWebViewDelegate> webViewDelegate;
+@property (nonatomic, assign) BOOL showToolbar;
 
 @end

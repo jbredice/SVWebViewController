@@ -346,7 +346,10 @@ static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
     }
 }
 
-- (void)doneButtonTapped:(id)sùender {
+- (void)doneButtonTapped:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(doneButtonTapped:)])
+        [_delegate performSelector:@selector(doneButtonTapped:) withObject:sender];
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

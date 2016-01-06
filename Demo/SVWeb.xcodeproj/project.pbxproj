@@ -30,6 +30,7 @@
 		28F335F11007B36200424DE2 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* ViewController.xib */; };
 		D53D8F1316A8688600711E30 /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = D53D8F1516A8688600711E30 /* SVWebViewController.strings */; };
 		D5FA63C516A8707A0087531C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5FA63C416A8707A0087531C /* Default-568h@2x.png */; };
+		EF1551221C3DAB1B00A92158 /* SVWebViewController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = EF1551211C3DAB1B00A92158 /* SVWebViewController.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		D53D8F1816A8693200711E30 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		D53D8F1916A8693A00711E30 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D5FA63C416A8707A0087531C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		EF1551211C3DAB1B00A92158 /* SVWebViewController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SVWebViewController.podspec; path = ../SVWebViewController.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		2214586C13132D3200ED7D83 /* SVWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EF1551211C3DAB1B00A92158 /* SVWebViewController.podspec */,
 				22F0876E1458794B003ECD31 /* SVModalWebViewController.h */,
 				22F0876F1458794B003ECD31 /* SVModalWebViewController.m */,
 				220F0B9E138E0EF400F59FC3 /* SVWebViewController.bundle */,
@@ -297,6 +300,7 @@
 				22AAF0BD1831F52F00AB15C4 /* SVWebViewControllerActivitySafari@2x.png in Resources */,
 				22AAF0BF1831F5B300AB15C4 /* README.md in Resources */,
 				D53D8F1316A8688600711E30 /* SVWebViewController.strings in Resources */,
+				EF1551221C3DAB1B00A92158 /* SVWebViewController.podspec in Resources */,
 				22AAF0B91831F52F00AB15C4 /* SVWebViewControllerActivityChrome@2x.png in Resources */,
 				D5FA63C516A8707A0087531C /* Default-568h@2x.png in Resources */,
 			);

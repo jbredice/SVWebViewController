@@ -316,33 +316,33 @@ static NSString* const ReadabilityURL = @"http://www.readability.com/m?url=";
 }
 
 - (void)actionButtonTapped:(id)sender {
+    NSURL *url = self.webView.request.URL ? self.webView.request.URL : self.request.URL;
+    if (!url) return;
+    
     if (_delegate && [_delegate respondsToSelector:@selector(actionButtonTapped:)]) {
-        [_delegate performSelector:@selector(actionButtonTapped:) withObject:sender];
+        [_delegate performSelector:@selector(actionButtonTapped:) withObject:url];
         return;
     }
     
-    NSURL *url = self.webView.request.URL ? self.webView.request.URL : self.request.URL;
-    if (url != nil) {
-        NSArray *activities = @[[SVWebViewControllerActivitySafari new], [SVWebViewControllerActivityChrome new]];
+    NSArray *activities = @[[SVWebViewControllerActivitySafari new], [SVWebViewControllerActivityChrome new]];
+    
+    if ([[url absoluteString] hasPrefix:@"file:///"]) {
+        UIDocumentInteractionController *dc = [UIDocumentInteractionController interactionControllerWithURL:url];
+        [dc presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+    } else {
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:activities];
         
-        if ([[url absoluteString] hasPrefix:@"file:///"]) {
-            UIDocumentInteractionController *dc = [UIDocumentInteractionController interactionControllerWithURL:url];
-            [dc presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-        } else {
-            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:activities];
-            
 #ifdef __IPHONE_8_0
-            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1 &&
-                UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            {
-                UIPopoverPresentationController *ctrl = activityController.popoverPresentationController;
-                ctrl.sourceView = self.view;
-                ctrl.barButtonItem = sender;
-            }
-#endif
-            
-            [self presentViewController:activityController animated:YES completion:nil];
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1 &&
+            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            UIPopoverPresentationController *ctrl = activityController.popoverPresentationController;
+            ctrl.sourceView = self.view;
+            ctrl.barButtonItem = sender;
         }
+#endif
+        
+        [self presentViewController:activityController animated:YES completion:nil];
     }
 }
 
